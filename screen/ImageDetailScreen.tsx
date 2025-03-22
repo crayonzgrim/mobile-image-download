@@ -3,11 +3,13 @@ import { Header } from '@/components/shared/Header/Header';
 import { Icon } from '@/components/shared/Icon';
 import { RemoteImage } from '@/components/shared/RemoteImage';
 import { Typography } from '@/components/shared/Typography';
+import { onClickFavorite } from '@/redux/actions/favorite';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import { useState } from 'react';
 import { ActivityIndicator, useWindowDimensions, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 // 네비게이션 파라미터 타입 정의
 type RootStackParamList = {
@@ -22,6 +24,19 @@ export const ImageDetailScreen = () => {
   const { goBack } = useNavigation();
 
   const [downloading, setDownloading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const isFavorite = useSelector((state: any) => {
+    return (
+      state.favorite.favoriteList.filter((item: any) => item === params.url)
+        .length > 0
+    );
+  });
+
+  const onPressFavorite = () => {
+    dispatch(onClickFavorite(params.url));
+  };
 
   const onPressBack = () => {
     goBack();
@@ -73,6 +88,11 @@ export const ImageDetailScreen = () => {
           <Header.Icon name={'arrow-back'} onPress={onPressBack} />
           <Header.Title title="IMAGE DETAIL" />
         </Header.Group>
+
+        <Header.Icon
+          name={isFavorite ? 'heart' : 'heart-outline'}
+          onPress={onPressFavorite}
+        />
       </Header>
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

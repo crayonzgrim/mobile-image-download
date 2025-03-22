@@ -27,7 +27,6 @@ export const PhotoListItem = ({ url }: { url: string }) => {
   }, [url]);
 
   const onPressIn = () => {
-    console.log('IN');
     Animated.timing(animationValue, {
       duration: 200,
       toValue: 1,
@@ -36,7 +35,6 @@ export const PhotoListItem = ({ url }: { url: string }) => {
   };
 
   const onPressOut = () => {
-    console.log('OUT');
     Animated.timing(animationValue, {
       duration: 200,
       toValue: 0,

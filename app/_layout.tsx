@@ -4,6 +4,8 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { Provider } from 'react-redux';
+import store from '../redux/store/store';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -23,12 +25,18 @@ export default function RootLayout() {
     return null;
   }
 
+  // return (
+  //   <SafeAreaProvider>
+  //     <Provider store={store}>
+  //       <CounterScreen />
+  //     </Provider>
+  //   </SafeAreaProvider>
+  // );
   return (
     <NavigationContainer>
-      {/* <Root /> */}
-
-      {/* <BottomTabNavigation /> */}
-      <RootStackNavigation />
+      <Provider store={store}>
+        <RootStackNavigation />
+      </Provider>
     </NavigationContainer>
   );
 
